@@ -27,10 +27,10 @@ public class DataInitializer implements CommandLineRunner {
     @Override
     public void run(String... args) {
         // Generate and add fake users
-        generateFakeUsers();
+      //  generateFakeUsers();
 
         // Generate and add fake cars
-        generateFakeCars();
+      //  generateFakeCars();
     }
 
     private void generateFakeUsers() {
