@@ -1,8 +1,7 @@
 package com.Huy.AutoWeb.Controller;
 
 import com.Huy.AutoWeb.Entity.Car;
-import com.Huy.AutoWeb.Service.CarService;
-import org.bson.types.ObjectId;
+import com.Huy.AutoWeb.Service.CarServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,10 +13,10 @@ import java.util.Optional;
 @RequestMapping("/api/cars")
 public class CarController {
 
-    private final CarService carService;
+    private final CarServiceImpl carService;
 
     @Autowired
-    public CarController(CarService carService) {
+    public CarController(CarServiceImpl carService) {
         this.carService = carService;
     }
 
@@ -27,7 +26,7 @@ public class CarController {
     }
 
     @GetMapping("/{carId}")
-    public ResponseEntity<Car> getCarById(@PathVariable ObjectId carId) {
+    public ResponseEntity<Car> getCarById(@PathVariable String carId) {
         Optional<Car> car = carService.getCarById(carId);
         return car.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
@@ -39,7 +38,7 @@ public class CarController {
     }
 
     @DeleteMapping("/{carId}")
-    public ResponseEntity<Void> deleteCar(@PathVariable ObjectId carId) {
+    public ResponseEntity<Void> deleteCar(@PathVariable String carId) {
         carService.deleteCar(carId);
         return ResponseEntity.noContent().build();
     }

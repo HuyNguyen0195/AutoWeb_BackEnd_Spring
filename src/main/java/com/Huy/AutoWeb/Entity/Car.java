@@ -8,7 +8,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Data
 @Document(collection = "cars") // Specify the MongoDB collection name
 public class Car {
-    private ObjectId id;
+    @Id
+    private String id;
 
     private String make;
     private String model;

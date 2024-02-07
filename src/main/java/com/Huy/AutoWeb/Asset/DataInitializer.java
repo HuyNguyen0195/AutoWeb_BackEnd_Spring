@@ -2,24 +2,28 @@ package com.Huy.AutoWeb.Asset;
 
 import com.Huy.AutoWeb.Entity.Car;
 import com.Huy.AutoWeb.Entity.User;
-import com.Huy.AutoWeb.Service.CarService;
-import com.Huy.AutoWeb.Service.UserService;
+import com.Huy.AutoWeb.Repository.CarRepository;
+import com.Huy.AutoWeb.Repository.UserRepository;
+import com.Huy.AutoWeb.Service.CarServiceImpl;
+import com.Huy.AutoWeb.Service.UserServiceImpl;
 import com.github.javafaker.Faker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import java.util.Arrays;
 import java.util.Random;
 
 @Component
 public class DataInitializer implements CommandLineRunner {
 
-    private final UserService userService;
-    private final CarService carService;
+    private final UserServiceImpl userService;
+    private final CarServiceImpl carService;
+
+    private CarRepository carRepository;
+    private UserRepository userRepository;
 
     @Autowired
-    public DataInitializer(UserService userService, CarService carService) {
+    public DataInitializer(UserServiceImpl userService, CarServiceImpl carService) {
         this.userService = userService;
         this.carService = carService;
     }
@@ -27,10 +31,11 @@ public class DataInitializer implements CommandLineRunner {
     @Override
     public void run(String... args) {
         // Generate and add fake users
-      //  generateFakeUsers();
+          //  generateFakeUsers();
 
         // Generate and add fake cars
-      //  generateFakeCars();
+           // generateFakeCars();
+
     }
 
     private void generateFakeUsers() {
