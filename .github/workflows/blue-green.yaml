@@ -1,0 +1,35 @@
+name: Input Event Workflow
+
+on:
+  workflow_dispatch:
+    inputs:
+      action:
+        description: 'Choose an action'
+        required: true
+        options:
+          build:
+            description: 'Build the project'
+          test:
+            description: 'Run tests'
+          deploy:
+            description: 'Deploy to production'
+
+jobs:
+  run-action:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Perform chosen action
+        run: |
+          if [ "${{ github.event.inputs.action }}" = "build" ]; then
+            # Perform build steps
+            echo "Building..."
+          elif [ "${{ github.event.inputs.action }}" = "test" ]; then
+            # Perform test steps
+            echo "Testing..."
+          elif [ "${{ github.event.inputs.action }}" = "deploy" ]; then
+            # Perform deployment steps
+            echo "Deploying..."
+   
