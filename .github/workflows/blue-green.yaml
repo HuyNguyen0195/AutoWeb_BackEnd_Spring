@@ -6,13 +6,9 @@ on:
       action:
         description: 'Choose an action'
         required: true
-        options:
-          build:
-            description: 'Build the project'
-          test:
-            description: 'Run tests'
-          deploy:
-            description: 'Deploy to production'
+        default: 'build'
+        # Define the available options as a comma-separated string
+        options: 'build, test, deploy'
 
 jobs:
   run-action:
@@ -32,4 +28,7 @@ jobs:
           elif [ "${{ github.event.inputs.action }}" = "deploy" ]; then
             # Perform deployment steps
             echo "Deploying..."
-   
+          else
+            echo "Invalid action specified"
+            exit 1
+          fi
