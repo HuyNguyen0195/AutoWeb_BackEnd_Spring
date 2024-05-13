@@ -1,5 +1,7 @@
 package com.Huy.AutoWeb.Utils;
 
+import com.Huy.AutoWeb.Entity.Car;
+import com.Huy.AutoWeb.Service.CarServiceImpl;
 import com.amazonaws.services.s3.model.ObjectListing;
 import com.amazonaws.services.s3.model.S3Object;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,12 +24,23 @@ public class AmazonS3Controller {
     private static final String FILE_NAME = "fileName";
 
     @Autowired
+    CarServiceImpl carService;
+    @Autowired
     AmazonS3Service s3Service;
 
-    @PostMapping("/upload")
-    public void uploadFile(@RequestParam String key,
-                           @RequestParam MultipartFile file) throws IOException {
-        s3Service.uploadFile( key, convert(file));
+    @PostMapping("/upload/{id}")
+    public ResponseEntity<String> uploadFile(@PathVariable String id,@RequestParam("file") MultipartFile file) throws IOException {
+        System.out.println(id);
+        Car car = carService.getCarById(id).orElse(null);
+        car.getImageUrl().add(file.getOriginalFilename());
+        System.out.println(car);
+        carService.saveCar(car);
+        s3Service.uploadFile(id,file);
+        return ResponseEntity.ok().body( file.getOriginalFilename()+"file upload successfully");
+    }
+    @PostMapping("/uploadDemo")
+    public ResponseEntity<String> handleFileUpload(@RequestParam("file") MultipartFile file){
+        return ResponseEntity.ok().body("file received successfully");
     }
 
     @GetMapping("/download")
@@ -38,12 +51,6 @@ public class AmazonS3Controller {
     @GetMapping("/list")
     public ObjectListing listObjects() {
         return s3Service.listObjects();
-    }
-
-    private File convert(MultipartFile file) throws IOException {
-        File convFile = new File(file.getOriginalFilename());
-        file.transferTo(convFile);
-        return convFile;
     }
 
 }

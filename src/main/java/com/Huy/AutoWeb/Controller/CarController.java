@@ -5,6 +5,7 @@ import com.Huy.AutoWeb.Service.CarServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
@@ -33,8 +34,7 @@ public class CarController {
 
     @PostMapping
     public ResponseEntity<Car> createCar(@RequestBody Car car) {
-        Car createdCar = carService.createCar(car);
-        return ResponseEntity.ok(createdCar);
+        return ResponseEntity.ok(carService.createCar(car));
     }
 
     @DeleteMapping("/{carId}")

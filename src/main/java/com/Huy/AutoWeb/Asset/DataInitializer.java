@@ -11,6 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 @Component
@@ -68,7 +71,11 @@ public class DataInitializer implements CommandLineRunner {
             fakeCar.setTransmission(randomElement("Automatic", "Manual"));
             fakeCar.setColor(faker.color().name());
             fakeCar.setDescription(faker.lorem().sentence());
-            fakeCar.setImageUrl("https://example.com/car-image" + i + ".jpg");
+            List<String> imageUrls = new ArrayList<>();
+            for (int j = 0; j < faker.random().nextInt(1, 5); j++) {
+                imageUrls.add(faker.internet().url());
+            }
+            fakeCar.setImageUrl(imageUrls);
 
             carService.createCar(fakeCar);
         }

@@ -5,6 +5,8 @@ import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.List;
+
 @Data
 @Document(collection = "cars") // Specify the MongoDB collection name
 public class Car {
@@ -20,5 +22,5 @@ public class Car {
     private String transmission;
     private String color;
     private String description;
-    private String imageUrl;
+    private List<String> imageUrl;
 }
